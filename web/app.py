@@ -1,9 +1,6 @@
-# --- 1. Added sys and os to manage cross-directory imports ---
 import sys
 import os
 
-# Adds the parent directory ('ipa2025-msapp-main') to Python's path
-# This allows the app to find the 'scheduler' directory and import the producer
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
@@ -13,18 +10,14 @@ from dotenv import load_dotenv
 import json
 from bson import json_util
 
-# --- 2. Correctly imports the producer from the 'scheduler' directory ---
 from scheduler.producer_modify_interface import produce_config_change_job
 
 
 load_dotenv()
 sample = Flask(__name__)
 
-# --- 3. Added a secret key, which is required for flash messaging ---
 sample.secret_key = os.getenv("FLASK_SECRET_KEY", "a-very-secret-key-for-dev")
 
-
-# Database connection setup
 mongo_uri = os.environ.get("MONGO_URI")
 db_name = os.environ.get("DB_NAME")
 client = MongoClient(mongo_uri)
@@ -33,8 +26,6 @@ mycol = mydb["routers"]
 mycol2 = mydb["interface_status"]
 mycol_config = mydb["running_config"]
 
-
-# --- 4. All route decorators are corrected from @app.route to @sample.route ---
 @sample.route("/")
 def main():
     data = mycol.find()
@@ -99,13 +90,9 @@ def interface_list(ip):
 @sample.route("/router/<ip>/configure/<path:interface_name>")
 def configure_interface_form(ip, interface_name):
     router = mycol.find_one({"ip": ip})
-    
-    # ดึงข้อมูล interface ปัจจุบันจาก database
     current_ip = ""
     current_mask = ""
     is_enabled = True
-    
-    # หาข้อมูล interface status ล่าสุด
     status_doc = mycol2.find_one(
         {"router_ip": ip},
         sort=[("timestamp", -1)]
