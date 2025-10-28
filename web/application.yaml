@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ipa2025-msapp-web
+  namespace: devops-tools
+spec:
+  project: ipa2025
+  source:
+    repoURL: 'https://github.com/MAK1z/ipa2025-msapp'
+    targetRevision: HEAD
+    path: web/manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ipa2025
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true/ipa2025-msapp'
+    targetRevision: HEAD
+    path: web/manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ipa2025
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

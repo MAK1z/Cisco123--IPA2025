@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Config - {{ ip }}</title>
+    <style>
+        body { font-family: sans-serif; }
+        pre { background-color: #f4f4f4; border: 1px solid #ddd; padding: 10px; white-space: pre-wrap; word-wrap: break-word; }
+        a { text-decoration: none; }
+        .button { background-color: #4CAF50; color: white; padding: 8px 12px; text-align: center; display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer; border: none; }
+    </style>
+</head>
+<body>
+
+    <h2>Running Config for: {{ ip }}</h2>
+    
+    {% if timestamp %}
+        <p><strong>Last fetched:</strong> {{ timestamp.strftime('%Y-%m-%d %H:%M:%S') }} UTC</p>
+    {% endif %}
+
+    {% if config_data %}
+        <pre><code>{{ config_data }}</code></pre>
+    {% else %}
+        <p>No running configuration found for this router.</p>
+    {% endif %}
+    
+    <br>
+    <a href="{{ url_for('main') }}" class="button">CD ..</a>
+
+</body>
+</html>

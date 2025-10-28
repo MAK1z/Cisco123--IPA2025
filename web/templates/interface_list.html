@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Interface to Configure</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <h1>Select Interface to Configure</h1>
+    <h2>Router: {{ router.ip }}</h2>
+    
+    {% if status_list %}
+        <table style="width:100%" border="1">
+            <tr>
+                <th>Interface</th>
+                <th>IP Address</th>
+                <th>Status</th>
+                <th>Protocol</th>
+                <th>Action</th>
+            </tr>
+            {% if status_list[0] and status_list[0].interfaces %}
+                {% for iface in status_list[0].interfaces %}
+                <tr>
+                    <td>{{ iface.interface }}</td>
+                    <td>{{ iface.ip_address }}</td>
+                    <td>{{ iface.status }}</td>
+                    <td>{{ iface.proto }}</td>
+                    <td>
+                        <a href="{{ url_for('configure_interface_form', ip=router.ip, interface_name=iface.interface) }}">
+                            <button type="button">Configure</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    {% else %}
+        <p>No interface data available for this router.</p>
+    {% endif %}
+    
+    <br>
+    <a href="{{ url_for('main') }}">
+        <button type="button">Back to Main</button>
+    </a>
+</body>
+</html>
