@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>router_detail</title>
+</head>
+<body>
+
+      <h2>Router: {{ router.ip }} </h2>
+        <table style="width:100%" border="1">
+            <tr>
+                <th>Timestamp</th>
+                <th>Interface</th>
+                <th>IP</th>
+                <th>Status</th>
+                <th>Protocol</th>
+            </tr>
+            {% for comment in status_list %}
+                {% for iface in comment.interfaces %}
+                <tr>
+                    <td>{{ comment.timestamp }}</td>
+                    <td>{{ iface.interface }}</td>
+                    <td>{{ iface.ip_address }}</td>
+                    <td>{{ iface.status }}</td>
+                    <td>{{ iface.proto }}</td>
+                </tr>
+                {% endfor %}    
+            {% endfor %}
+        </table>
+        <br>
+        <a href="{{  url_for('main')  }}"> CD .. </a>
+</body>
+</html>
