@@ -21,5 +21,5 @@ def produce_config_job(host, body):
         queue=queue_name, exchange="jobs", routing_key=routing_key
     )
     channel.basic_publish(exchange="jobs", routing_key=routing_key, body=body)
-    print(f" [x] Sent job with routing key '{routing_key}'")
+    #print(f" [x] Sent job with routing key '{routing_key}'")
     connection.close()

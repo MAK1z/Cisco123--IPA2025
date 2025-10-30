@@ -14,5 +14,5 @@ def produce_config_change_job(host, body):
     queue_name = "config_change_jobs"
     channel.queue_declare(queue=queue_name)
     channel.basic_publish(exchange="", routing_key=queue_name, body=body)
-    print(f" [x] Sent job to queue '{queue_name}'")
+    #print(f" [x] Sent job to queue '{queue_name}'")
     connection.close()

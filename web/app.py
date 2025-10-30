@@ -9,8 +9,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import json
 from bson import json_util
-
-from scheduler.producer_modify_interface import produce_config_change_job
+from datetime import datetime
 
 
 load_dotenv()
@@ -25,6 +24,7 @@ mydb = client[db_name]
 mycol = mydb["routers"]
 mycol2 = mydb["interface_status"]
 mycol_config = mydb["running_config"]
+mycol_interface_config = mydb["interface_config"]
 
 @sample.route("/")
 def main():
@@ -125,23 +125,25 @@ def submit_interface_config(ip, interface_name):
     new_ip = request.form.get("ip_address")
     netmask = request.form.get("netmask")
     status = request.form.get("status")
-
-    job_payload = {
+    is_enabled = True if status == "enabled" else False
+    config_doc = {
         "router_ip": router["ip"],
-        "username": router["username"],
-        "password": router["password"],
         "interface_name": interface_name,
         "ip_address": new_ip,
         "netmask": netmask,
-        "is_enabled": True if status == "enabled" else False
+        "is_enabled": is_enabled,
+        "updated_at": datetime.utcnow(),
     }
 
     try:
-        body_bytes = json.dumps(job_payload, default=json_util.default).encode("utf-8")
-        produce_config_change_job(os.getenv("RABBITMQ_HOST"), body_bytes)
-        flash(f"Configuration job for {interface_name} submitted successfully!", "success")
+        mycol_interface_config.update_one(
+            {"router_ip": router["ip"], "interface_name": interface_name},
+            {"$set": config_doc},
+            upsert=True,
+        )
+        flash(f"Saved configuration for {interface_name} to database.", "success")
     except Exception as e:
-        flash(f"Failed to submit job: {e}", "error")
+        flash(f"Failed to save configuration: {e}", "error")
 
     return redirect(url_for("router_detail", ip=ip))
 
