@@ -52,6 +52,9 @@ def delete_comment():
         router_ip = data_list[idx]['ip']
         col = {"_id": data_list[idx]["_id"]}
         mycol.delete_one(col)
+        mycol2.delete_many({"router_ip": router_ip})
+        mycol_config.delete_many({"router_ip": router_ip})
+        mycol_interface_config.delete_many({"router_ip": router_ip})
         flash(f"Router {router_ip} has been deleted.", "success")
     except Exception:
         flash("Error deleting router.", "error")
