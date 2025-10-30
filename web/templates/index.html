@@ -1,39 +1,113 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Router</title>
-    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='index/style.css') }}">
+
 </head>
 <body>
-    <h1>Register Router</h1>
-    <form method="POST" action="/add">
-    IP:<input name="ip" required />
-    USERNAME:<input name="username" required />
-    PASSWORD:<input name="password" type="password" required />
-    <button type="submit">Add</button>
-  </form>
-  <h2>Routers List</h2>
-  <ul>
-    {% for comment in data %}
-      <li>
-           {{ comment.ip }} - {{ comment.username }}	 
-         <form method="POST" action="{{ url_for('delete_comment') }}" style="display:inline">
-           <input type="hidden" name="idx" value="{{ loop.index0 }}">
-           <button type="submit">Delete</button>
-         </form>
-         <a href="{{ url_for('router_detail', ip=comment.ip) }}">
-           <button type="button">Detail</button>
-         </a>
-         
-         <a href="{{ url_for('running_config', ip=comment.ip) }}">
-            <button type="button">Config</button>
-         </a>
-         
-         <a href="{{ url_for('interface_list', ip=comment.ip) }}">
-            <button type="button">Configure</button>
-         </a>
-         </li>
-    {% endfor %}
-  </ul>
+    <!-- Floating Bubbles -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
 
+    <header>
+        <h1>Cisco123!</h1>
+    </header>
+
+    <div class="container">
+        <div class="hero-section">
+            <h2>Router Management System</h2>
+            <p>Infrastructure Programmability and Automation Project</p>
+        </div>
+
+        <div class="form-section">
+            <h3>Register Router</h3>
+            <form method="POST" action="/add">
+                <div class="form-group">
+                    <label for="ip">IP Address</label>
+                    <input id="ip" name="ip" type="text" placeholder="192.168.1.1" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" placeholder="Enter username" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Enter password" required />
+                </div>
+                
+                <button type="submit">Add Router</button>
+            </form>
+        </div>
+
+        <div class="routers-section">
+            <h3>Registered Routers</h3>
+            <ul>
+                {% for comment in data %}
+                <li>
+                    <div class="router-info">
+                        {{ comment.ip }} - {{ comment.username }}
+                    </div>
+                    <div class="button-group">
+                        <form method="POST" action="{{ url_for('delete_comment') }}" style="display:inline">
+                            <input type="hidden" name="idx" value="{{ loop.index0 }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                        <a href="{{ url_for('router_detail', ip=comment.ip) }}">
+                            <button type="button">Detail</button>
+                        </a>
+                        <a href="{{ url_for('running_config', ip=comment.ip) }}">
+                            <button type="button">Config</button>
+                        </a>
+                        <a href="{{ url_for('interface_list', ip=comment.ip) }}">
+                            <button type="button">Configure</button>
+                        </a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="features-section">
+            <h3>System Features</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4>Router Details</h4>
+                    <p>View comprehensive information about each router including status, uptime, and system details</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h4>Configuration View</h4>
+                    <p>Access and review running configuration of your routers in real-time</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h4>Interface Configuration</h4>
+                    <p>Manage and configure network interfaces with ease and precision</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Router Management System. All rights reserved.</p>
+            <p>
+              Made with 💙 by
+              <a href="https://github.com/kridsanapakron-m" target="_blank">kridsanapakron-m</a>,
+              <a href="https://github.com/MAK1z" target="_blank">MAK1z</a>,
+              <a href="https://github.com/flookpt" target="_blank">flookpt</a>
+            </p>
+        </div>
+    </footer>
 </body>
 </html>

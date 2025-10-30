@@ -4,44 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Interface to Configure</title>
-    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='interface_list/style.css') }}">
+
 </head>
 <body>
-    <h1>Select Interface to Configure</h1>
-    <h2>Router: {{ router.ip }}</h2>
-    
-    {% if status_list %}
-        <table style="width:100%" border="1">
-            <tr>
-                <th>Interface</th>
-                <th>IP Address</th>
-                <th>Status</th>
-                <th>Protocol</th>
-                <th>Action</th>
-            </tr>
-            {% if status_list[0] and status_list[0].interfaces %}
-                {% for iface in status_list[0].interfaces %}
-                <tr>
-                    <td>{{ iface.interface }}</td>
-                    <td>{{ iface.ip_address }}</td>
-                    <td>{{ iface.status }}</td>
-                    <td>{{ iface.proto }}</td>
-                    <td>
-                        <a href="{{ url_for('configure_interface_form', ip=router.ip, interface_name=iface.interface) }}">
-                            <button type="button">Configure</button>
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            {% endif %}
-        </table>
-    {% else %}
-        <p>No interface data available for this router.</p>
-    {% endif %}
-    
-    <br>
-    <a href="{{ url_for('main') }}">
-        <button type="button">Back to Main</button>
-    </a>
+    <!-- Floating Bubbles -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <header>
+        <h1>Cisco123!</h1>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="page-header-content">
+                <h2>Select Interface to Configure</h2>
+                <h3>Router: {{ router.ip }}</h3>
+            </div>
+            <a href="{{ url_for('main') }}" class="back-button">Back to Home</a>
+        </div>
+
+        {% if status_list %}
+            <div class="table-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Interface</th>
+                            <th>IP Address</th>
+                            <th>Status</th>
+                            <th>Protocol</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if status_list[0] and status_list[0].interfaces %}
+                            {% for iface in status_list[0].interfaces %}
+                            <tr>
+                                <td>{{ iface.interface }}</td>
+                                <td>{{ iface.ip_address }}</td>
+                                <td>{{ iface.status }}</td>
+                                <td>{{ iface.proto }}</td>
+                                <td>
+                                    <a href="{{ url_for('configure_interface_form', ip=router.ip, interface_name=iface.interface) }}">
+                                        <button type="button" class="configure-btn">Configure</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="table-section">
+                <div class="no-data">
+                    <p>No interface data available for this router.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Router Management System. All rights reserved.</p>
+            <p>
+              Made with 💙 by
+              <a href="https://github.com/kridsanapakron-m" target="_blank">kridsanapakron-m</a>,
+              <a href="https://github.com/MAK1z" target="_blank">MAK1z</a>,
+              <a href="https://github.com/flookpt" target="_blank">flookpt</a>
+            </p>
+        </div>
+    </footer>
 </body>
 </html>

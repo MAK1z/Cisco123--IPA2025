@@ -4,29 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Running Config - {{ ip }}</title>
-    <style>
-        body { font-family: sans-serif; }
-        pre { background-color: #f4f4f4; border: 1px solid #ddd; padding: 10px; white-space: pre-wrap; word-wrap: break-word; }
-        a { text-decoration: none; }
-        .button { background-color: #4CAF50; color: white; padding: 8px 12px; text-align: center; display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer; border: none; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='running_config/style.css') }}">
 </head>
 <body>
+    <!-- Floating Bubbles -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
 
-    <h2>Running Config for: {{ ip }}</h2>
-    
-    {% if timestamp %}
-        <p><strong>Last fetched:</strong> {{ timestamp.strftime('%Y-%m-%d %H:%M:%S') }} UTC</p>
-    {% endif %}
+    <header>
+        <h1>Cisco123!</h1>
+    </header>
 
-    {% if config_data %}
-        <pre><code>{{ config_data }}</code></pre>
-    {% else %}
-        <p>No running configuration found for this router.</p>
-    {% endif %}
-    
-    <br>
-    <a href="{{ url_for('main') }}" class="button">CD ..</a>
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h2>Running Config: {{ ip }}</h2>
+                {% if timestamp %}
+                    <div class="timestamp">
+                        <strong>Last fetched:</strong> {{ timestamp.strftime('%Y-%m-%d %H:%M:%S') }} UTC
+                    </div>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('main') }}" class="back-button">Back to Home</a>
+        </div>
 
+        <div class="config-section">
+            <h3>Configuration Details</h3>
+            {% if config_data %}
+                <pre><code>{{ config_data }}</code></pre>
+            {% else %}
+                <div class="no-config">
+                    <p>No running configuration found for this router.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Router Management System. All rights reserved.</p>
+            <p>
+              Made with 💙 by
+              <a href="https://github.com/kridsanapakron-m" target="_blank">kridsanapakron-m</a>,
+              <a href="https://github.com/MAK1z" target="_blank">MAK1z</a>,
+              <a href="https://github.com/flookpt" target="_blank">flookpt</a>
+            </p>
+        </div>
+    </footer>
 </body>
 </html>

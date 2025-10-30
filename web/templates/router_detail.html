@@ -3,32 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>router_detail</title>
+    <title>Router Detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='router_detail/style.css') }}">
+
 </head>
 <body>
+    <!-- Floating Bubbles -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
 
-      <h2>Router: {{ router.ip }} </h2>
-        <table style="width:100%" border="1">
-            <tr>
-                <th>Timestamp</th>
-                <th>Interface</th>
-                <th>IP</th>
-                <th>Status</th>
-                <th>Protocol</th>
-            </tr>
-            {% for comment in status_list %}
-                {% for iface in comment.interfaces %}
-                <tr>
-                    <td>{{ comment.timestamp }}</td>
-                    <td>{{ iface.interface }}</td>
-                    <td>{{ iface.ip_address }}</td>
-                    <td>{{ iface.status }}</td>
-                    <td>{{ iface.proto }}</td>
-                </tr>
-                {% endfor %}    
-            {% endfor %}
-        </table>
-        <br>
-        <a href="{{  url_for('main')  }}"> CD .. </a>
+    <header>
+        <h1>Cisco123!</h1>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Router: {{ router.ip }}</h2>
+            <a href="{{ url_for('main') }}" class="back-button">Back to Home</a>
+        </div>
+
+        <div class="table-section">
+            <h3>Interface Status</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Interface</th>
+                        <th>IP Address</th>
+                        <th>Netmask</th>
+                        <th>Status</th>
+                        <th>Protocol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comment in status_list %}
+                        {% for iface in comment.interfaces %}
+                        <tr>
+                            <td>{{ comment.timestamp }}</td>
+                            <td>{{ iface.interface }}</td>
+                            <td>{{ iface.ip_address }}</td>
+                            <td>{{ iface.netmask }}</td>
+                            <td>{{ iface.status }}</td>
+                            <td>{{ iface.proto }}</td>
+                        </tr>
+                        {% endfor %}    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Router Management System. All rights reserved.</p>
+            <p>
+              Made with 💙 by
+              <a href="https://github.com/kridsanapakron-m" target="_blank">kridsanapakron-m</a>,
+              <a href="https://github.com/MAK1z" target="_blank">MAK1z</a>,
+              <a href="https://github.com/flookpt" target="_blank">flookpt</a>
+            </p>
+        </div>
+    </footer>
 </body>
 </html>
