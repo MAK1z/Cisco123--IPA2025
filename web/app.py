@@ -148,7 +148,7 @@ def submit_interface_config(ip, interface_name):
     except Exception as e:
         flash(f"Failed to save configuration: {e}", "error")
 
-    return redirect(url_for("router_detail", ip=ip))
+    return redirect(url_for("interface_list", ip=ip))
 
 
 if __name__ == "__main__":

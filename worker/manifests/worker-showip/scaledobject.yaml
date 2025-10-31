@@ -1,11 +1,11 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: ipa2025-msapp-worker-scaler
+  name: ipa2025-msapp-worker-sh-ip-int-scaler
   namespace: ipa2025
 spec:
   scaleTargetRef:
-    name: ipa2025-msapp-worker
+    name: ipa2025-msapp-worker-sh-ip-int
   pollingInterval: 15
   cooldownPeriod: 120
   minReplicaCount: 1

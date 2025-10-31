@@ -25,5 +25,5 @@ def produce(host, body):
 
 
 if __name__ == "__main__":
-    produce("192.168.2.118", "Test message")
+    produce("192.168.1.181", "Test message")
 

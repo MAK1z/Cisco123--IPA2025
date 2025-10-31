@@ -43,8 +43,8 @@ services:
       - "15672:15672"
       - "5672:5672"
     environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: rabbitmq
+      RABBITMQ_DEFAULT_USER: ubuntu
+      RABBITMQ_DEFAULT_PASS: ubuntu
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
@@ -52,19 +52,53 @@ services:
     env_file:
       - .env
   
-  worker:
-    build: ./worker
+  sh_ip_int_br_worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.sh_ip_int_br
+    env_file:
+      - .env
+    environment:
+      MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/"
+      DB_NAME: "ipa2025_db"
     depends_on:
       - rabbitmq
       - mongo
       - scheduler
     networks:
       - app-net
+
+  sh_run_worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.sh_run
     env_file:
       - .env
     environment:
       MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/"
       DB_NAME: "ipa2025_db"
+    depends_on:
+      - rabbitmq
+      - mongo
+      - scheduler
+    networks:
+      - app-net
+
+  modify_interface_worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.modify_interface
+    env_file:
+      - .env
+    environment:
+      MONGO_URI: "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/"
+      DB_NAME: "ipa2025_db"
+    depends_on:
+      - rabbitmq
+      - mongo
+      - scheduler
+    networks:
+      - app-net
 
 volumes:
   mongo-data:

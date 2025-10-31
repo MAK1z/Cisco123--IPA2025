@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ipa2025-msapp-worker-modify
+  namespace: ipa2025
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ipa2025-msapp-worker-modify
+  template:
+    metadata:
+      labels:
+        app: ipa2025-msapp-worker-modify
+    spec:
+      containers:
+        - name: ipa2025-msapp-worker-modify
+          image: mak1z/worker-modify:latest
+          envFrom:
+            - secretRef:
+                name: "unique-name"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+      restartPolicy: Always

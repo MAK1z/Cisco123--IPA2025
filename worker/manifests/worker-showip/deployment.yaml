@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ipa2025-msapp-worker
+  name: ipa2025-msapp-worker-sh-ip-int
   namespace: ipa2025
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ipa2025-msapp-worker
+      app: ipa2025-msapp-worker-sh-ip-int
   template:
     metadata:
       labels:
-        app: ipa2025-msapp-worker
+        app: ipa2025-msapp-worker-sh-ip-int
     spec:
       containers:
-        - name: ipa2025-msapp-worker
-          image: mak1z/worker:latest
+        - name: ipa2025-msapp-worker-sh-ip-int
+          image: mak1z/worker-sh_ip_int_br:latest
           envFrom:
             - secretRef:
-                name: "unique-name" # ชื่อ secret ให้ตรงกับที่เราสร้าง secret ใน rancher
+                name: "unique-name"
           resources:
             requests:
               cpu: "50m"
