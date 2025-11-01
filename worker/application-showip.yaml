@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/MAK1z/Cisco123--IPA2025'
     targetRevision: HEAD
-    path: worker/manifests
+    path: worker/manifests/worker-showip
   destination:
     server: https://kubernetes.default.svc
     namespace: ipa-2025
