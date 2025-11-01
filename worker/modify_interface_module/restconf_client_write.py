@@ -35,10 +35,14 @@ def configure_interface(
     }
 
     try:
-        print(router_ip, username, password, iface_name, iface_ip, iface_mask, is_enabled)
+        print(
+            router_ip, username, password, iface_name, iface_ip, iface_mask, is_enabled
+        )
         if iface_ip == router_ip:
             return True, "Configuration successful"
-        elif (iface_ip == "" or iface_ip is None) and (iface_mask == "" or iface_mask is None):
+        elif (iface_ip == "" or iface_ip is None) and (
+            iface_mask == "" or iface_mask is None
+        ):
             del_url = f"https://{router_ip}/restconf/data/ietf-interfaces:interfaces/interface={iface_name}/ietf-ip:ipv4"
             response = requests.delete(del_url, auth=(username, password), verify=False)
             response.raise_for_status()
