@@ -6,8 +6,7 @@ def callback(ch, method, props, body):
     router_ip = job["ip"]
     router_username = job["username"]
     router_password = job["password"]
-    print(f" [✓] Received interface job for router {router_ip}")
     try:
         get_interfaces(router_ip, router_username, router_password)
     except Exception as e:
-        print(f" [✗] Error: {e}")
+        print(f"Error: {e}")

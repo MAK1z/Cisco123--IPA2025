@@ -8,7 +8,6 @@ def consume(host):
     pwd = os.getenv("RABBITMQ_DEFAULT_PASS")
     for attempt in range(10):
         try:
-            print(f"Connecting to RabbitMQ (try {attempt})...")
             creds = pika.PlainCredentials(user, pwd)
             conn = pika.BlockingConnection(pika.ConnectionParameters(host, credentials=creds))
             break
@@ -24,6 +23,4 @@ def consume(host):
     ch.queue_declare(queue=queue_name)
     ch.basic_qos(prefetch_count=1)
     ch.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
-    
-    print(f" [*] Waiting for messages in queue '{queue_name}'. To exit press CTRL+C")
     ch.start_consuming()

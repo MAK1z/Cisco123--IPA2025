@@ -20,7 +20,7 @@ def get_running_config(ip, username, password):
         response.raise_for_status()
 
     except requests.exceptions.RequestException as e:
-        print(f"[✗] Error connecting to {ip}: {e}")
+        print(f"Error connecting to {ip}: {e}")
         return
 
     try:
@@ -28,13 +28,13 @@ def get_running_config(ip, username, password):
         config_data = data.get("Cisco-IOS-XE-native:native", {})
         
         if not config_data:
-            print(f"[✗] Could not find 'Cisco-IOS-XE-native:native' key in response from {ip}")
+            print(f"Could not find 'Cisco-IOS-XE-native:native' key in response from {ip}")
             return
 
         save_running_config(ip, config_data)
-        print(f"[✓] Successfully saved running-config for {ip} to MongoDB.")
+        print(f"Successfully saved running-config for {ip} to MongoDB.")
 
     except json.JSONDecodeError:
-        print(f"[✗] Invalid JSON received from {ip}")
+        print(f"Invalid JSON received from {ip}")
     except Exception as e:
-        print(f"[✗] An error occurred while saving to MongoDB: {e}")
+        print(f"An error occurred while saving to MongoDB: {e}")

@@ -14,7 +14,7 @@ def get_interfaces(ip, username, password):
     db_name = os.getenv("DB_NAME")
 
     if not mongo_uri or not db_name:
-        print("[✗] Missing MONGO_URI or DB_NAME in .env")
+        print("Missing MONGO_URI or DB_NAME in .env")
         return
 
     url = f"https://{ip}/restconf/data/ietf-interfaces:interfaces"
@@ -26,11 +26,11 @@ def get_interfaces(ip, username, password):
     try:
         response = requests.get(url, headers=headers, auth=(username, password), verify=False)
     except Exception as e:
-        print(f"[✗] Error connecting to {ip}: {e}")
+        print(f"Error connecting to {ip}: {e}")
         return
 
     if response.status_code != 200:
-        print(f"[✗] Failed to fetch interfaces from {ip}, status: {response.status_code}")
+        print(f"Failed to fetch interfaces from {ip}, status: {response.status_code}")
         print(response.text)
         return
 
@@ -63,9 +63,9 @@ def get_interfaces(ip, username, password):
 
     try:
         save_interface_status(ip, interfaces)
-        print(f"[✓] Saved {len(interfaces)} interfaces from {ip} to MongoDB")
+        print(f"Saved {len(interfaces)} interfaces from {ip} to MongoDB")
     except Exception as e:
-        print(f"[✗] Failed to save data to MongoDB: {e}")
+        print(f"Failed to save data to MongoDB: {e}")
 
 if __name__ == "__main__":
     get_interfaces()

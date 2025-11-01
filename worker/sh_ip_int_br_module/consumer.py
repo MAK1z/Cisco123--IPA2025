@@ -26,5 +26,5 @@ def consume(host):
     ch.basic_qos(prefetch_count=1)
     ch.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
     
-    print(f" [*] Waiting for messages in queue '{queue_name}'. To exit press CTRL+C")
+    print(f"Waiting for messages in queue '{queue_name}'.")
     ch.start_consuming()
