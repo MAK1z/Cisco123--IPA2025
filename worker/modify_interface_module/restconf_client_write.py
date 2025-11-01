@@ -35,15 +35,21 @@ def configure_interface(
     }
 
     try:
-        requests.delete(url, auth=(username, password), verify=False)
-        response = requests.put(
-            url,
-            headers=headers,
-            auth=(username, password),
-            data=json.dumps(payload),
-            verify=False,
-        )
-        response.raise_for_status()
+        if iface_ip == router_ip:
+            return True, "Configuration successful"
+        elif iface_ip == "" and iface_mask == "":
+            response = requests.delete(url, auth=(username, password), verify=False)
+            response.raise_for_status()
+        else:
+            requests.delete(url, auth=(username, password), verify=False)
+            response = requests.put(
+                url,
+                headers=headers,
+                auth=(username, password),
+                data=json.dumps(payload),
+                verify=False,
+            )
+            response.raise_for_status()
         return True, "Configuration successful"
 
     except requests.exceptions.RequestException as e:
