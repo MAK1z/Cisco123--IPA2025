@@ -27,11 +27,6 @@
         <div class="page-header">
             <div>
                 <h2>Running Config: {{ ip }}</h2>
-                {% if timestamp %}
-                    <div class="timestamp">
-                        <strong>Last fetched:</strong> {{ timestamp.strftime('%Y-%m-%d %H:%M:%S') }} UTC
-                    </div>
-                {% endif %}
             </div>
             <a href="{{ url_for('main') }}" class="back-button">Back to Home</a>
         </div>

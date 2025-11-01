@@ -80,7 +80,6 @@ def running_config(ip):
         "running_config.html",
         ip=ip,
         config_data=config_str,
-        timestamp=config_doc.get("timestamp"),
     )
 
 
