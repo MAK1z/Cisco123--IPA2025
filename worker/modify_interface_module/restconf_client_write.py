@@ -35,7 +35,7 @@ def configure_interface(
     }
 
     try:
-        if iface_ip == router_ip: # git conflict here
+        if iface_ip == router_ip:  # git conflict here
             return True, "Configuration successful"
         elif iface_ip == "" and iface_mask == "":
             response = requests.delete(url, auth=(username, password), verify=False)
