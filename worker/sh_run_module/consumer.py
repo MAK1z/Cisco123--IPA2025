@@ -3,13 +3,16 @@ import os
 import time
 from .callback import callback
 
+
 def consume(host):
     user = os.getenv("RABBITMQ_DEFAULT_USER")
     pwd = os.getenv("RABBITMQ_DEFAULT_PASS")
     for attempt in range(10):
         try:
             creds = pika.PlainCredentials(user, pwd)
-            conn = pika.BlockingConnection(pika.ConnectionParameters(host, credentials=creds))
+            conn = pika.BlockingConnection(
+                pika.ConnectionParameters(host, credentials=creds)
+            )
             break
         except Exception as e:
             print(f"Failed: {e}")

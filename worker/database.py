@@ -3,7 +3,10 @@ from datetime import datetime, UTC
 import os
 from bson import ObjectId
 from dotenv import load_dotenv
+
 load_dotenv()
+
+
 def get_db_collection(collection_name):
     """คืนค่า collection และ client object"""
     MONGO_URI = os.getenv("MONGO_URI")
@@ -50,5 +53,5 @@ def delete_interface_config(doc_id):
     if not isinstance(doc_id, ObjectId):
         doc_id = ObjectId(doc_id)
 
-    result = collection.delete_one({"_id": doc_id})
+    collection.delete_one({"_id": doc_id})
     client.close()

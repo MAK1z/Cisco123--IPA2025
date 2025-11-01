@@ -1,6 +1,7 @@
 from bson import json_util
 from .restconf_get_config import get_running_config
 
+
 def callback(ch, method, props, body):
     job = json_util.loads(body.decode())
     router_ip = job["ip"]

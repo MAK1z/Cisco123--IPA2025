@@ -1,15 +1,13 @@
 import sys
 import os
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-
-
 from flask import Flask, request, render_template, redirect, url_for, flash
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import json
 from bson import json_util
 from datetime import datetime
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 
 load_dotenv()
@@ -25,6 +23,7 @@ mycol = mydb["routers"]
 mycol2 = mydb["interface_status"]
 mycol_config = mydb["running_config"]
 mycol_interface_config = mydb["interface_config"]
+
 
 @sample.route("/")
 def main():
@@ -49,7 +48,7 @@ def delete_comment():
     data_list = list(mycol.find())
     try:
         idx = int(request.form.get("idx"))
-        router_ip = data_list[idx]['ip']
+        router_ip = data_list[idx]["ip"]
         col = {"_id": data_list[idx]["_id"]}
         mycol.delete_one(col)
         mycol2.delete_many({"router_ip": router_ip})
@@ -71,24 +70,28 @@ def router_detail(ip):
 
 @sample.route("/router/<ip>/config")
 def running_config(ip):
-    config_doc = mycol_config.find_one(
-        {"router_ip": ip},
-        sort=[("timestamp", -1)]
-    )
+    config_doc = mycol_config.find_one({"router_ip": ip}, sort=[("timestamp", -1)])
     config_str = ""
     if config_doc and "running_config" in config_doc:
         config_str = json.dumps(
-            config_doc["running_config"],
-            indent=4,
-            default=json_util.default
+            config_doc["running_config"], indent=4, default=json_util.default
         )
-    return render_template("running_config.html", ip=ip, config_data=config_str, timestamp=config_doc.get("timestamp"))
+    return render_template(
+        "running_config.html",
+        ip=ip,
+        config_data=config_str,
+        timestamp=config_doc.get("timestamp"),
+    )
+
 
 @sample.route("/router/<ip>/interfaces")
 def interface_list(ip):
     router = mycol.find_one({"ip": ip})
     status_list = list(mycol2.find({"router_ip": ip}).sort("timestamp", -1).limit(1))
-    return render_template("interface_list.html", router=router, status_list=status_list)
+    return render_template(
+        "interface_list.html", router=router, status_list=status_list
+    )
+
 
 @sample.route("/router/<ip>/configure/<path:interface_name>")
 def configure_interface_form(ip, interface_name):
@@ -96,11 +99,8 @@ def configure_interface_form(ip, interface_name):
     current_ip = ""
     current_mask = ""
     is_enabled = True
-    status_doc = mycol2.find_one(
-        {"router_ip": ip},
-        sort=[("timestamp", -1)]
-    )
-    
+    status_doc = mycol2.find_one({"router_ip": ip}, sort=[("timestamp", -1)])
+
     if status_doc and "interfaces" in status_doc:
         for iface in status_doc["interfaces"]:
             if iface.get("interface") == interface_name:
@@ -108,15 +108,16 @@ def configure_interface_form(ip, interface_name):
                 current_mask = iface.get("netmask", "")
                 is_enabled = iface.get("status", "down") == "up"
                 break
-    
+
     return render_template(
         "configure_interface.html",
         router=router,
         interface_name=interface_name,
         current_ip=current_ip,
         current_mask=current_mask,
-        is_enabled=is_enabled
+        is_enabled=is_enabled,
     )
+
 
 @sample.route("/router/<ip>/configure/<path:interface_name>", methods=["POST"])
 def submit_interface_config(ip, interface_name):

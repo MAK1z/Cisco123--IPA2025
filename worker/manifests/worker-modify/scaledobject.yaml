@@ -2,7 +2,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: ipa2025-msapp-worker-modify-scaler
-  namespace: ipa2025
+  namespace: ipa2-025
 spec:
   scaleTargetRef:
     name: ipa2025-msapp-worker-modify

@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 
 from producer_shrun import produce_config_job
 from producer_modify_interface import produce_config_change_job
+
 load_dotenv()
+
 
 def scheduler():
 

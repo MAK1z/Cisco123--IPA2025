@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ipa2025-msapp-worker-modify
-  namespace: ipa2025
+  namespace: ipa-2025
 spec:
   replicas: 1
   selector:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ipa2025-msapp-worker-modify
-          image: mak1z/worker-modify:latest
+          image: mak1z/proworker-modify:latest
           envFrom:
             - secretRef:
                 name: "unique-name"

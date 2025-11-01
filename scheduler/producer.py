@@ -1,7 +1,9 @@
 import pika
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
+
 
 def produce(host, body):
     rabbitmq_user = os.getenv("RABBITMQ_DEFAULT_USER")
@@ -26,4 +28,3 @@ def produce(host, body):
 
 if __name__ == "__main__":
     produce("192.168.1.181", "Test message")
-

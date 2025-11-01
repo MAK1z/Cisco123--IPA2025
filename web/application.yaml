@@ -4,14 +4,14 @@ metadata:
   name: ipa2025-msapp-web
   namespace: devops-tools
 spec:
-  project: ipa2025
+  project: ipa-2025
   source:
-    repoURL: 'https://github.com/MAK1z/ipa2025-msapp'
+    repoURL: 'https://github.com/MAK1z/Cisco123--IPA2025'
     targetRevision: HEAD
     path: web/manifests
   destination:
     server: https://kubernetes.default.svc
-    namespace: ipa2025
+    namespace: ipa-2025
   syncPolicy:
     automated:
       prune: true
@@ -20,7 +20,7 @@ spec:
     path: web/manifests
   destination:
     server: https://kubernetes.default.svc
-    namespace: ipa2025
+    namespace: ipa-2025
   syncPolicy:
     automated:
       prune: true

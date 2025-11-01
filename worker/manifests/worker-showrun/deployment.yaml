@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ipa2025-msapp-worker-sh-run
-  namespace: ipa2025
+  namespace: ipa-2025
 spec:
   replicas: 1
   selector:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ipa2025-msapp-worker-sh-run
-          image: mak1z/worker-sh_run:latest
+          image: mak1z/proworker-sh_run:latest
           envFrom:
             - secretRef:
                 name: "unique-name"
