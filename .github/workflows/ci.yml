@@ -30,6 +30,7 @@ jobs:
         run: black --check .
 
       # --- Added: Sonar Scan (runs right after black, before Docker) ---
+      # --- Sonar (for SonarCloud) ---
       - name: Setup Java (for Sonar Scanner)
         uses: actions/setup-java@v4
         with:
