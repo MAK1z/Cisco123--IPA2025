@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ipa2025-msapp-worker
+  name: ipa2025-msapp-worker-showip
   namespace: devops-tools
 spec:
   project: ipa-2025
