@@ -36,14 +36,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Sonar Scan
-        uses: SonarSource/sonarqube-scan-action@v6
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          # ถ้าเป็น SonarQube (self-hosted) ให้ตั้ง secret นี้ด้วย:
-          # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
-          # ถ้าใช้ SonarCloud ให้ใส่ args ด้านล่าง (ปรับค่าให้ตรงโปรเจกต์)
           args: >
             -Dsonar.projectKey=MAK1z_Cisco123--IPA2025
             -Dsonar.organization=MAK1z
