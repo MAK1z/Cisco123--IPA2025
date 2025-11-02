@@ -29,22 +29,22 @@ jobs:
       - name: Check code format with black
         run: black --check .
 
-      # # --- Added: Sonar Scan (runs right after black, before Docker) ---
-      # - name: Setup Java (for Sonar Scanner)
-      #   uses: actions/setup-java@v4
-      #   with:
-      #     distribution: temurin
-      #     java-version: 17
+      # --- Added: Sonar Scan (runs right after black, before Docker) ---
+      - name: Setup Java (for Sonar Scanner)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
 
-      # - name: SonarCloud Scan
-      #   uses: SonarSource/sonarcloud-github-action@v2
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #   with:
-      #     args: >
-      #       -Dsonar.projectKey=MAK1z_Cisco123--IPA2025
-      #       -Dsonar.organization=MAK1z
-      # # --- End Added ---
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=MAK1z_Cisco123--IPA2025
+            -Dsonar.organization=MAK1z
+      # --- End Added ---
 
       - name: Check Docker Versions
         run: |
