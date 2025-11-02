@@ -45,6 +45,7 @@ jobs:
           args: >
             -Dsonar.projectKey=MAK1z_Cisco123--IPA2025
             -Dsonar.organization=MAK1z
+            -Dsonar.python.version=3.12
       # --- End Added ---
 
       - name: Check Docker Versions
