@@ -38,7 +38,7 @@ jobs:
           java-version: 17
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@40f5b61f2213797b5f1e813f59e6022e0e5a8e0f
+        uses: SonarSource/sonarqube-scan-action@f9649968b906a380e922c070a793540d9b4bab0d
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
