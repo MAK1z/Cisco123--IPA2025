@@ -42,6 +42,13 @@ def configure_interface(
 
     try:
         if iface_ip == router_ip:
+            print("1",router_ip,
+    username,
+    password,
+    iface_name,
+    iface_ip,
+    iface_mask,
+    is_enabled,)
             return True, "Configuration successful"
         elif (iface_ip == "" or iface_ip is None) and (
             iface_mask == "" or iface_mask is None
@@ -61,13 +68,7 @@ def configure_interface(
                     }
                 }
                 if not addresses:
-                    requests.put(
-                        url,
-                        headers=headers,
-                        auth=(username, password),
-                        data=json.dumps(disable_payload),
-                        verify=False,
-                    )
+                    return True, "Configuration successful"
                 for addr in addresses:
                     ip = addr.get("ip")
                     if ip:
